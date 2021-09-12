@@ -41,7 +41,6 @@ app.put('/produto/:id', async(req, resp) => {
     try {
         let {nome, categoria, precode, precopor, avaliacao, descricao, estoque, imagem} = req.body;
         let {id} = req.params;
-
         let r = await db.tb_produto.update({
             nm_produto: nome,
             ds_categoria: categoria, 
