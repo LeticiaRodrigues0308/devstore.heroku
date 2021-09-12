@@ -17,7 +17,48 @@ app.get('/produto', async(req, resp) => {
 
 app.post('/produto', async(req,resp) => {
     try {
-        let {nome, categoria, precode, precopor, avaliacao, descricao, estoque, imagem, ativo, data} = req.body;
+        let {nome, categoria, precode, precopor, avaliacao, descricao, estoque, imagem} = req.body;
+
+        let exist = await db.tb_produto.findOne({where: {nm_produto: req.body.nome}});
+        if(exist != null) {
+            return resp.send({erro: 'Produto ja existe!'});
+        }
+
+        if(avaliacao < 0 || avaliacao > 10) {
+            return resp.send({erro: 'Número de avaliação inválido entre 0 e 10'});
+        }
+
+        if(avaliacao != Number) {
+            return resp.send({erro: 'Valor de avaliação inválido'})
+        }
+
+        if(!nome || nome == '') {
+            return resp.send({erro: 'Campo Nome é obrigatório'});
+        }
+
+        if(!categoria || categoria == '') {
+            return resp.send({erro: 'Campo Categoria é obrigatório'});
+        }
+
+        if(!precopor || precopor == '') {
+            return resp.send({erro: 'Campo Preço POR é obrigatório'});
+        }
+
+        if(!avaliacao || avaliacao == '') {
+            return resp.send({erro: 'Campo Avaliação é obrigatório'});
+        }
+
+        if(!descricao || descricao == '') {
+            return resp.send({erro: 'Campo Descrição é obrigatório'});
+        }
+
+        if(!estoque || estoque == '') {
+            return resp.send({erro: 'Campo Estoque é obrigatório'});
+        }
+
+        if(!imagem || imagem == '') {
+            return resp.send({erro: 'Campo Link Imagem é obrigatório'});
+        }
 
         let r = await db.tb_produto.create({
             nm_produto: nome,
@@ -28,8 +69,8 @@ app.post('/produto', async(req,resp) => {
             ds_produto: descricao,
             qtd_estoque: estoque,
             img_produto: imagem,
-            bt_ativo: ativo,
-            dt_inclusao: data
+            bt_ativo: true,
+            dt_inclusao: new Date()
         })
         resp.send(r)
     } catch (e) {
@@ -49,9 +90,7 @@ app.put('/produto/:id', async(req, resp) => {
             vl_avaliacao: avaliacao,
             ds_produto: descricao,
             qtd_estoque: estoque,
-            img_produto: imagem,
-            bt_ativo: true,
-            dt_inclusao: new Date()
+            img_produto: imagem
         },
         {
             where: {id_produto: id}
