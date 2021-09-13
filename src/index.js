@@ -18,30 +18,21 @@ app.get('/produto', async(req, resp) => {
 app.post('/produto', async(req,resp) => {
     try {
         let {nome, categoria, precode, precopor, avaliacao, descricao, estoque, imagem} = req.body;
-
-        let exist = await db.tb_produto.findOne({where: {nm_produto: req.body.nome}});
-        if(exist != null) {
-            return resp.send({erro: 'Produto ja existe!'});
-        }
-
+        
         if(isNaN(avaliacao) || avaliacao < 0 || avaliacao > 10) {
             return resp.send({erro: 'Valor Avaliação inválido'});
         }
 
-        if(isNaN(precode) || precode <= 0) {
+        if(isNaN(precode) || precode < 0) {
             return resp.send({erro: 'Valor Preço DE inválido'});
         }
 
-        if(isNaN(precopor) || precopor <= 0) {
+        if(isNaN(precopor) || precopor < 0) {
             return resp.send({erro: 'Valor Preço POR inválido'});
         }
 
         if(isNaN(estoque) || estoque < 0) {
             return resp.send({erro: 'Valor Estoque inválido'});
-        }
-
-        if(avaliacao == String(true)) {
-            return resp.send({erro: 'Valor Avaliaçãooo inválido'});
         }
 
         if(!nome || nome == '') {
@@ -50,6 +41,10 @@ app.post('/produto', async(req,resp) => {
 
         if(!categoria || categoria == '') {
             return resp.send({erro: 'Campo Categoria é obrigatório'});
+        }
+
+        if(!precode || precode == '') {
+            return resp.send({erro: 'Campo Preço DE é obrigatório'});
         }
 
         if(!precopor || precopor == '') {
@@ -70,6 +65,12 @@ app.post('/produto', async(req,resp) => {
 
         if(!imagem || imagem == '') {
             return resp.send({erro: 'Campo Link Imagem é obrigatório'});
+        }
+
+        
+        let exist = await db.tb_produto.findOne({where: {nm_produto: req.body.nome}});
+        if(exist != null) {
+            return resp.send({erro: 'Produto ja existe!'});
         }
 
         let r = await db.tb_produto.create({
