@@ -24,12 +24,24 @@ app.post('/produto', async(req,resp) => {
             return resp.send({erro: 'Produto ja existe!'});
         }
 
-        if(avaliacao < 0 || avaliacao > 10) {
-            return resp.send({erro: 'Número de avaliação inválido entre 0 e 10'});
+        if(isNaN(avaliacao) || avaliacao < 0 || avaliacao > 10) {
+            return resp.send({erro: 'Valor Avaliação inválido'});
         }
 
-        if(avaliacao != Number) {
-            return resp.send({erro: 'Valor de avaliação inválido'})
+        if(isNaN(precode) || precode <= 0) {
+            return resp.send({erro: 'Valor Preço DE inválido'});
+        }
+
+        if(isNaN(precopor) || precopor <= 0) {
+            return resp.send({erro: 'Valor Preço POR inválido'});
+        }
+
+        if(isNaN(estoque) || estoque < 0) {
+            return resp.send({erro: 'Valor Estoque inválido'});
+        }
+
+        if(avaliacao == String(true)) {
+            return resp.send({erro: 'Valor Avaliaçãooo inválido'});
         }
 
         if(!nome || nome == '') {
