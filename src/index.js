@@ -67,6 +67,14 @@ app.post('/produto', async(req,resp) => {
             return resp.send({erro: 'Campo Link Imagem é obrigatório'});
         }
 
+        if(nome.length < 3)
+            return resp.send({erro: "Não é possivel inserir um nome com menos de 3 caracteres"});
+
+        if(categoria.length < 3)
+            return resp.send({erro: "Não é possivel inserir uma categoria com menos de 3 caracteres"});
+
+        if(descricao.length < 3)
+            return resp.send({erro: "Não é possivel inserir uma descrição com menos de 3 caracteres"});
         
         let exist = await db.tb_produto.findOne({where: {nm_produto: req.body.nome}});
         if(exist != null) {
