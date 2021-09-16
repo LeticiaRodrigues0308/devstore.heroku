@@ -103,6 +103,69 @@ app.put('/produto/:id', async(req, resp) => {
     try {
         let {nome, categoria, precode, precopor, avaliacao, descricao, estoque, imagem} = req.body;
         let {id} = req.params;
+
+        if(isNaN(avaliacao) || avaliacao < 0 || avaliacao > 10) {
+            return resp.send({erro: 'Valor Avaliação inválido'});
+        }
+
+        if(isNaN(precode) || precode < 0) {
+            return resp.send({erro: 'Valor Preço DE inválido'});
+        }
+
+        if(isNaN(precopor) || precopor < 0) {
+            return resp.send({erro: 'Valor Preço POR inválido'});
+        }
+
+        if(isNaN(estoque) || estoque < 0) {
+            return resp.send({erro: 'Valor Estoque inválido'});
+        }
+
+        if(nome == '') {
+            return resp.send({erro: 'Campo Nome é obrigatório'});
+        }
+
+        if(categoria == '') {
+            return resp.send({erro: 'Campo Categoria é obrigatório'});
+        }
+
+        if(precode == '') {
+            return resp.send({erro: 'Campo Preço DE é obrigatório'});
+        }
+
+        if(precopor == '') {
+            return resp.send({erro: 'Campo Preço POR é obrigatório'});
+        }
+
+        if(avaliacao == '') {
+            return resp.send({erro: 'Campo Avaliação é obrigatório'});
+        }
+
+        if(descricao == '') {
+            return resp.send({erro: 'Campo Descrição é obrigatório'});
+        }
+
+        if(estoque == '') {
+            return resp.send({erro: 'Campo Estoque é obrigatório'});
+        }
+
+        if(imagem == '') {
+            return resp.send({erro: 'Campo Link Imagem é obrigatório'});
+        }
+
+        if(nome.length < 3)
+            return resp.send({erro: "Não é possivel inserir um nome com menos de 3 caracteres"});
+
+        if(categoria.length < 3)
+            return resp.send({erro: "Não é possivel inserir uma categoria com menos de 3 caracteres"});
+
+        if(descricao.length < 3)
+            return resp.send({erro: "Não é possivel inserir uma descrição com menos de 3 caracteres"});
+        
+        let exist = await db.tb_produto.findOne({where: {nm_produto: req.body.nome}});
+        if(exist != null) {
+            return resp.send({erro: 'Produto ja existe!'});
+        }
+
         let r = await db.tb_produto.update({
             nm_produto: nome,
             ds_categoria: categoria, 
