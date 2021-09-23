@@ -35,35 +35,35 @@ app.post('/produto', async(req,resp) => {
             return resp.send({erro: 'Valor Estoque inválido'});
         }
 
-        if(nome == '') {
+        if(nome === '') {
             return resp.send({erro: 'Campo Nome é obrigatório'});
         }
 
-        if(categoria == '') {
+        if(categoria === '') {
             return resp.send({erro: 'Campo Categoria é obrigatório'});
         }
 
-        if(precode == '') {
+        if(precode === '') {
             return resp.send({erro: 'Campo Preço DE é obrigatório'});
         }
 
-        if(precopor == '') {
+        if(precopor === '') {
             return resp.send({erro: 'Campo Preço POR é obrigatório'});
         }
 
-        if(avaliacao == '') {
+        if(avaliacao === '') {
             return resp.send({erro: 'Campo Avaliação é obrigatório'});
         }
 
-        if(descricao == '') {
+        if(descricao === '') {
             return resp.send({erro: 'Campo Descrição é obrigatório'});
         }
 
-        if(estoque == '') {
+        if(estoque === '') {
             return resp.send({erro: 'Campo Estoque é obrigatório'});
         }
 
-        if(imagem == '') {
+        if(imagem === '') {
             return resp.send({erro: 'Campo Link Imagem é obrigatório'});
         }
 
@@ -120,35 +120,35 @@ app.put('/produto/:id', async(req, resp) => {
             return resp.send({erro: 'Valor Estoque inválido'});
         }
 
-        if(nome == '') {
+        if(nome === '') {
             return resp.send({erro: 'Campo Nome é obrigatório'});
         }
 
-        if(categoria == '') {
+        if(categoria === '') {
             return resp.send({erro: 'Campo Categoria é obrigatório'});
         }
 
-        if(precode == '') {
+        if(precode === '') {
             return resp.send({erro: 'Campo Preço DE é obrigatório'});
         }
 
-        if(precopor == '') {
+        if(precopor === '') {
             return resp.send({erro: 'Campo Preço POR é obrigatório'});
         }
 
-        if(avaliacao == '') {
+        if(avaliacao === '') {
             return resp.send({erro: 'Campo Avaliação é obrigatório'});
         }
 
-        if(descricao == '') {
+        if(descricao === '') {
             return resp.send({erro: 'Campo Descrição é obrigatório'});
         }
 
-        if(estoque == '') {
+        if(estoque === '') {
             return resp.send({erro: 'Campo Estoque é obrigatório'});
         }
 
-        if(imagem == '') {
+        if(imagem === '') {
             return resp.send({erro: 'Campo Link Imagem é obrigatório'});
         }
 
